@@ -27,7 +27,7 @@ function ProductList() {
       <div className="d-flex flex-wrap">
         {
           products.map(
-            product => <ProductItem
+            product => <JewelryPage
               key={product.id}
               title={product.title}
               jewelry={product.jewelry}
