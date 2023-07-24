@@ -1,44 +1,25 @@
-import { useEffect, useState } from "react"
-import JewelryPage from "../pages/JewelryPage"
-
-function ProductList() {
-  const [products, setProducts] = useState([])
-  const [cartItemCounter, setCartItemCounter] = useState(0)
+function ProductList(props) {
   
-  useEffect(() => {
-    document.title = 'Products'
-  }, [])
+    const { title, jewelry, description, image, discountPercentage, addToCart } = props
 
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products/category/jewelery')
-      .then(res => res.json())
-      .then(data => {
-        setProducts(data.products)
-      })
-  }, [setProducts])
-
-  function addToCart() {
-    setCartItemCounter(cartItemCounter + 1)
+    let saleBanner;
+  if (discountPercentage > 40) {
+    saleBanner = <span className="fw-bold text-danger">SALE!!!</span>
   }
 
   return (
     <>
-      <h3>Cart Items: <span className="fw-bold">{cartItemCounter}</span></h3>
-      <div className="d-flex flex-wrap">
-        {
-          products.map(
-            product => <JewelryPage
-              key={product.id}
-              title={product.title}
-              jewelry={product.jewelry}
-              description={product.description}
-              image={product.image}
-              discountPercentage={product.discountPercentage}
-              addToCart={addToCart}
-            />
-          )
-        }
+      <div className="card" style={{
+        width: '18rem'
+     }}>
+      <img src={image} className="card-img-top" alt="..." />
+      <div className="card-body">
+        <h5 className="card-title">{title} {saleBanner}</h5>
+        <p className="card-jewelry">{jewelry}</p>
+        <p className="card-text">{description}</p>
+        <button className="btn btn-primary" onClick={addToCart}>Add to Cart</button>
       </div>
+    </div>
     </>
   )
 }
